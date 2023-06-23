@@ -30,12 +30,12 @@
 #endif
 
 // Wi-Fi credentials
-const char* WIFI_SSID = "WIFI_ATAS";
-const char* WIFI_PASSWORD = "Diparkiranmotor!";
+const char* WIFI_SSID = "SSID";
+const char* WIFI_PASSWORD = "PASSWORD";
 
 // Telegram bot token and chat ID
-#define BOT_TOKEN "6294099213:AAHDgakEGT_9dDImypRXgzV3pKDC-8Fuokk"
-#define CHAT_ID "-928963331"
+#define BOT_TOKEN "BOT_TOKEN
+#define CHAT_ID "CHAT_ID"
 
 WiFiClientSecure client;
 
