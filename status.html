@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:,">
+    <style>
+        html {
+            font-family: Helvetica;
+            display: inline-block;
+            margin: 0px auto;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #195B6A;
+            border: none;
+            color: white;
+            padding: 16px 40px;
+            text-decoration: none;
+            font-size: 30px;
+            margin: 2px;
+            cursor: pointer;
+        }
+
+        .button2 {
+            background-color: #77878A;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Sistem Informasi Waduk Gajahduduk</h1>
+    <h1>K3520007 - K3520060 - K3520080</h1>
+    <p id="statusDatabase">Dapat terkoneksi dengan database</p>
+    <h2>Status Bendungan dan Gerbang Air</h2>
+    <table style="border: 2px #195B6A; border-radius: 1px;">
+        <thead>
+            <tr>
+                <td>Nama Pintu</td>
+                <td>Status Pintu</td>
+            </tr>
+        </thead>
+        <tbody id="state">
+        </tbody>
+    </table>
+
+    <h2>Riwayat Ketinggian Air</h2>
+    <table style="border: 2px #195B6A; border-radius: 1px;">
+        <thead>
+            <tr>
+                <td colspan="3" id="firstGate">Utara</td>
+                <td colspan="3" id="secondGate">Selatan</td>
+            </tr>
+            <tr>
+                <td>Waktu</td>
+                <td>Ketinggian</td>
+                <td>Status</td>
+                <td>Waktu</td>
+                <td>Ketinggian</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        <div id="cnt"></div>
+        <tbody id="ketinggianAir">
+        </tbody>
+    </table>
+</body>
+
+<script>
+    let i = 0;      // Its just a counter.
+
+    function getDataState(url) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.responseType = 'json';
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var htmls = "";
+                for (let i = 0; i < this.response.data.length; i++) {
+                    htmls += `
+                    <tr>
+                        <td>${this.response.data[i].gate_name}</td>
+                        <td>${(this.response.data[i].state == 1) ? "Terbuka" : "Tertutup"}</td>
+                    </tr>
+                        `
+                }
+                document.getElementById("state").innerHTML = htmls;
+
+            }
+        }
+        xhttp.open("GET", "https://hanaemi.my.id/state.php", true)
+        xhttp.send();
+    }
+
+    function getDataAir(url) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.responseType = 'json';
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var htmls = "";
+                for (let i = 0; i < this.response.data[0].length; i++) {
+                    htmls += `
+                    <tr>
+                        <td>${this.response.data[0][i].time}</td>
+                        <td>${this.response.data[0][i].water_height}</td>
+                        <td>${(this.response.data[0][i].status == 1) ? "Aman" : "Tidak Aman"}</td>
+                        <td>${this.response.data[1][i].time}</td>
+                        <td>${this.response.data[1][i].water_height}</td>
+                        <td>${(this.response.data[1][i].status == 1) ? "Aman" : "Tidak Aman"}</td>
+                    </tr>
+                        `
+                }
+                document.getElementById("ketinggianAir").innerHTML = htmls;
+
+            }
+        }
+        xhttp.open("GET", "https://hanaemi.my.id/status.php", true)
+        xhttp.send();
+    }
+    var counter = 5;
+    window.setInterval(function () {
+        counter--;
+        if (counter >= 0) {
+            var span;
+            span = document.getElementById("cnt");
+            span.innerHTML = counter;
+        }
+        if (counter === 0) {
+            counter = 5;
+        }
+
+    }, 1000);
+
+    let reload = window.setInterval('getDataAir()', 5000);
+    reload = window.setInterval('getDataState()', 5000);
+</script>
+
+</html>

@@ -1,0 +1,27 @@
+// Authors:
+// - Palguno Wicaksono
+// - Ahmad Mishbahuddin
+// - Yeremi Wesly Sinaga
+// =====================================
+//
+// This library was a final exam project
+// for 02143252003
+// at Sebelas Maret University
+//
+// The copyright holder <the authors> grant the freedom
+// to copy, modify, convey, adapt, and/or redistribute this work
+// under the terms of the Massachusetts Institute of Technology License.
+
+#ifndef RELAY_CONTROL_H
+#define RELAY_CONTROL_H
+
+#include <Arduino.h>
+
+class RelayControl
+{
+public:
+  void initRelayControl();
+  int controlRelay(int port, int state);
+};
+
+#endif
