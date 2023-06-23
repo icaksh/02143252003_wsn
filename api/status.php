@@ -51,9 +51,9 @@ try {
         echo json_encode($status);
         exit;
     }
-    $status = 0;
-    if($height > 20){
-        $status = 1;
+    $status = 1;
+    if($height > 600){
+        $status = 0;
     }
     if($gate == 1){
         $gate_2 =2;
