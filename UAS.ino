@@ -34,7 +34,7 @@ const char* WIFI_SSID = "SSID";
 const char* WIFI_PASSWORD = "PASSWORD";
 
 // Telegram bot token and chat ID
-#define BOT_TOKEN "BOT_TOKEN
+#define BOT_TOKEN "BOT_TOKEN"
 #define CHAT_ID "CHAT_ID"
 
 WiFiClientSecure client;
